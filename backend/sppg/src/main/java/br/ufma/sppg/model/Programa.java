@@ -1,6 +1,8 @@
 package br.ufma.sppg.model;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,7 +38,11 @@ public class Programa {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "programa_docente", joinColumns = @JoinColumn(name = "id_programa"), inverseJoinColumns = @JoinColumn(name = "id_docente"))
-    List<Docente> docentes;
-
+    @JoinTable(
+        name="programa_docente",
+        joinColumns = @JoinColumn(name="id_programa"),
+        inverseJoinColumns = @JoinColumn(name="id_docente")
+    )    
+    List<Docente> docentes;  
+    
 }
