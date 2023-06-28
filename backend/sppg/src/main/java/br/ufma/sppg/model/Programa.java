@@ -38,6 +38,7 @@ public class Programa {
 
     @JsonIgnore
     @ManyToMany
+<<<<<<< HEAD
     @JoinTable(
         name="programa_docente",
         joinColumns = @JoinColumn(name="id_programa"),
@@ -45,4 +46,9 @@ public class Programa {
     )    
     List<Docente> docentes;  
     
+=======
+    @JoinTable(name = "programa_docente", joinColumns = @JoinColumn(name = "id_programa"), inverseJoinColumns = @JoinColumn(name = "id_docente"))
+    List<Docente> docentes;
+
+>>>>>>> 74f1f51547bfc7d68a1532c4e90c26e8823c6e6a
 }
