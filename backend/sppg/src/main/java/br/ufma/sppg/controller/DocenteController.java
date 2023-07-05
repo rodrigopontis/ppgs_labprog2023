@@ -6,16 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufma.sppg.model.Docente;
 import br.ufma.sppg.model.Orientacao;
 import br.ufma.sppg.model.Producao;
 import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.service.OrientacaoService;
 import br.ufma.sppg.service.ProducaoService;
 import br.ufma.sppg.service.TecnicaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
+import jakarta.security.auth.message.AuthException;
 
 @RequestMapping("/api/Docente")
 @RestController
@@ -29,9 +33,16 @@ public class DocenteController {
     @Autowired
     OrientacaoService orientacaoServivce;
 
+    @Autowired
+    DocenteRepository repo;
     // todo: rota de login
 
     // todo: rota de cadastro
+
+    @GetMapping
+    public List<Docente> getAll() {
+        return repo.findAll();
+    }
 
     @GetMapping("/obter_producoes/{id}/{data1}/{data2}")
     public ResponseEntity<?> obterProducoesDeDocente(@PathVariable(value = "id", required = true) Integer idDocente,
