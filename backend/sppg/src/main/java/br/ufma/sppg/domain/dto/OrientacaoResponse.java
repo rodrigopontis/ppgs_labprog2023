@@ -1,11 +1,11 @@
-package br.ufma.sppg.dto;
+package br.ufma.sppg.domain.dto;
 
 import java.util.List;
 
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Producao;
-import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Tecnica;
 import lombok.Data;
 
 @Data
@@ -23,7 +23,6 @@ public class OrientacaoResponse {
     List<Producao> producoes;
     List<Tecnica> tecnicas;
 
-
     public OrientacaoResponse(Orientacao orientacao) {
         this.id = orientacao.getId();
         this.tipo = orientacao.getTipo();
@@ -34,8 +33,8 @@ public class OrientacaoResponse {
         this.instituicao = orientacao.getInstituicao();
         this.curso = orientacao.getCurso();
         this.status = orientacao.getStatus();
-        this.orientador=orientacao.getOrientador();
-        this.producoes=orientacao.getProducoes();
-        this.tecnicas=orientacao.getTecnicas();
+        this.orientador = orientacao.getOrientador();
+        this.producoes = orientacao.getProducoes();
+        this.tecnicas = orientacao.getTecnicas();
     }
 }

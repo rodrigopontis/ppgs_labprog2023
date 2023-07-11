@@ -1,4 +1,4 @@
-package br.ufma.sppg.model;
+package br.ufma.sppg.domain.model;
 
 import java.util.List;
 
@@ -34,10 +34,10 @@ public class Orientacao {
     @Column(name = "tipo")
     private String tipo;
 
-    @Column(name="natureza")
+    @Column(name = "natureza")
     private String natureza;
-    
-    @Column(name="discente")
+
+    @Column(name = "discente")
     private String discente;
 
     @Column(name = "titulo")

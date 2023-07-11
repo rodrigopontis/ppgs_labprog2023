@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Programa, Login } from "../pages";
+import { Programa, Login, Docente } from "../pages";
 
 export const router = createBrowserRouter([
   {
@@ -9,5 +9,9 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/docente",
+    element: <Docente />,
   },
 ]);

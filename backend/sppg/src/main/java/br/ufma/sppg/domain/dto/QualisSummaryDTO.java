@@ -1,8 +1,8 @@
-package br.ufma.sppg.dto;
+package br.ufma.sppg.domain.dto;
 
 import java.util.List;
 
-import br.ufma.sppg.model.Producao;
+import br.ufma.sppg.domain.model.Producao;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package br.ufma.sppg.model;
+package br.ufma.sppg.domain.model;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class Tecnica {
     @Column(name = "autores")
     String autores;
 
-    @Column(name="ano")
+    @Column(name = "ano")
     Integer ano;
 
     @Column(name = "financiadora")

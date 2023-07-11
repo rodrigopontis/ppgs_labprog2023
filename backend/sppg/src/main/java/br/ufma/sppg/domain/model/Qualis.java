@@ -1,4 +1,4 @@
-package br.ufma.sppg.model;
+package br.ufma.sppg.domain.model;
 
 import java.util.List;
 

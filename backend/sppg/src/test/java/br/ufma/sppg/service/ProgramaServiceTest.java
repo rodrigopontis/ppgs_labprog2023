@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.ufma.sppg.dto.Indice;
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Producao;
-import br.ufma.sppg.model.Programa;
-import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.domain.dto.Indice;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.OrientacaoRepository;
 import br.ufma.sppg.repo.ProducaoRepository;

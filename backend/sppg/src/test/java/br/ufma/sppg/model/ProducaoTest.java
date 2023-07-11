@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import br.ufma.sppg.domain.model.Producao;
 import br.ufma.sppg.repo.ProducaoRepository;
 import java.text.ParseException;
 import java.util.Optional;

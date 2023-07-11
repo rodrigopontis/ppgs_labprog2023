@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import br.ufma.sppg.model.Orientacao;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.OrientacaoRepository;
-import br.ufma.sppg.model.Producao;
 import br.ufma.sppg.repo.ProducaoRepository;
-import br.ufma.sppg.model.Tecnica;
 import br.ufma.sppg.repo.TecnicaRepository;
 
 @SpringBootTest
@@ -73,7 +73,7 @@ public class OrientacaoTest {
 
         // rollback
         or.delete(orientacaoSalvo);
-        pr.delete(producaoSalvo);        
+        pr.delete(producaoSalvo);
 
         Assertions.assertNotNull(orientacaoSalvo);
         Assertions.assertEquals(orientacao.getTipo(), orientacaoSalvo.getTipo());
@@ -84,7 +84,8 @@ public class OrientacaoTest {
         Assertions.assertEquals(orientacao.getInstituicao(), orientacaoSalvo.getInstituicao());
         Assertions.assertEquals(orientacao.getCurso(), orientacaoSalvo.getCurso());
         Assertions.assertEquals(orientacao.getStatus(), orientacaoSalvo.getStatus());
-        Assertions.assertEquals(orientacao.getProducoes().get(0).getId(), orientacaoSalvo.getProducoes().get(0).getId());
+        Assertions.assertEquals(orientacao.getProducoes().get(0).getId(),
+                orientacaoSalvo.getProducoes().get(0).getId());
     }
 
     @Test
@@ -104,7 +105,7 @@ public class OrientacaoTest {
         // rollback
         or.delete(orientacaoSalvo);
         tr.delete(tecnicaSalvo);
-        
+
         Assertions.assertNotNull(orientacaoSalvo);
         Assertions.assertEquals(orientacao.getTipo(), orientacaoSalvo.getTipo());
         Assertions.assertEquals(orientacao.getAno(), orientacaoSalvo.getAno());

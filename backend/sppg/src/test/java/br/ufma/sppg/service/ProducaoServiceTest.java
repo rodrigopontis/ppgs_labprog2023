@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Producao;
-import br.ufma.sppg.model.Programa;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.OrientacaoRepository;
 import br.ufma.sppg.repo.ProducaoRepository;
@@ -29,7 +29,7 @@ public class ProducaoServiceTest {
     @Autowired
     ProducaoRepository producaoRepo;
 
-    @Autowired 
+    @Autowired
     DocenteRepository docenteRepo;
 
     @Autowired
@@ -52,8 +52,11 @@ public class ProducaoServiceTest {
         producaoRepo.save(producaoSalvar);
         docenteRepo.save(docenteSalvar);
         Docente docenteRecuperado = docenteRepo.findById(docenteSalvar.getId()).get();
-        // List<Producao> producoesObtidas = service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial, anoFinal);
-        Assertions.assertThrows(NullPointerException.class, ()-> service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial, anoFinal));
+        // List<Producao> producoesObtidas =
+        // service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial,
+        // anoFinal);
+        Assertions.assertThrows(NullPointerException.class,
+                () -> service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial, anoFinal));
     }
 
     @Test
@@ -70,10 +73,12 @@ public class ProducaoServiceTest {
         Producao producaoSalva = producaoRepo.save(producaoSalvar);
         docenteRepo.save(docenteSalvar);
         Docente docenteRecuperado = docenteRepo.findById(docenteSalvar.getId()).get();
-        List<Producao> producoesObtidas = service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial, anoFinal);
-        
+        List<Producao> producoesObtidas = service.obterProducoesDocente(docenteRecuperado.getId(), anoInicial,
+                anoFinal);
+
         Assertions.assertEquals(producaoSalva, producoesObtidas.get(0));
     }
+
     @Test
     public void deveRetornarProducaoPorDocente() {
         // Cenário
@@ -91,11 +96,11 @@ public class ProducaoServiceTest {
 
         // Teste
         Assertions.assertEquals(producaoRecuperada, producoesObtidas.get(0));
-        
+
     }
 
     @Test
-    public void deveRetornarProducaoPorPrograma(){
+    public void deveRetornarProducaoPorPrograma() {
         // mesmo teste de cima, mas com programa no lugar de docente
         Producao producaoSalvar = Producao.builder().tipo("teste").ano(2020).build();
         List<Producao> producoes = new ArrayList<Producao>();
@@ -117,7 +122,7 @@ public class ProducaoServiceTest {
     }
 
     @Test
-    public void deveRetornarOrientacoesPorProducao(){
+    public void deveRetornarOrientacoesPorProducao() {
         Producao producaoSalvar = Producao.builder().tipo("teste").ano(2020).build();
         List<Producao> producoes = new ArrayList<Producao>();
         producoes.add(producaoSalvar);
@@ -131,6 +136,6 @@ public class ProducaoServiceTest {
         List<Orientacao> orientacoesObtidas = service.obterOrientacaoProducao(producaoSalva.getId());
 
         Assertions.assertEquals(orientacaoRecuperada, orientacoesObtidas.get(0));
-        
+
     }
 }

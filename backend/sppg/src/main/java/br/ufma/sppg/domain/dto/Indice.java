@@ -1,4 +1,4 @@
-package br.ufma.sppg.dto;
+package br.ufma.sppg.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Indice {
-    
+
     Double indiceRest;
     Double indiceNRest;
     Double indiceGeral;

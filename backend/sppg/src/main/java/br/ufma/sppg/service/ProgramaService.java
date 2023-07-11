@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufma.sppg.dto.Indice;
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Producao;
-import br.ufma.sppg.model.Programa;
-import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.domain.dto.Indice;
+import br.ufma.sppg.domain.dto.QualisStatsDTO;
+import br.ufma.sppg.domain.enums.QualisEnum;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.ProgramaRepository;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
@@ -20,6 +22,39 @@ public class ProgramaService {
 
     @Autowired
     ProgramaRepository repository;
+
+    public List<Programa> findAll() {
+        return repository.findAll();
+    }
+
+    public List<QualisStatsDTO> getQualisStats(Integer idPrograma, Integer anoIni, Integer anoFim) {
+
+        verificarId(idPrograma);
+        verificarData(anoIni, anoFim);
+
+        List<Docente> docentes = repository.obterDocentes(idPrograma);
+        List<QualisStatsDTO> stats = new ArrayList<QualisStatsDTO>();
+
+        for (QualisEnum value : QualisEnum.values()) {
+            stats.add(new QualisStatsDTO(value, 0));
+        }
+
+        for (Docente docente : docentes) {
+            for (Producao prod : docente.getProducoes()) {
+                if (prod.getAno() >= anoIni && prod.getAno() <= anoFim) {
+                    if (prod.getQualis() != null) {
+                        for (QualisStatsDTO stat : stats) {
+                            if (stat.getType().toString().equals(prod.getQualis())) {
+                                stat.setQtd(stat.getQtd() + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return stats;
+    }
 
     public List<Programa> obterPrograma(String nome) {
         verificarNome(nome);

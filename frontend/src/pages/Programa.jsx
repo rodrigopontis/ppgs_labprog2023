@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { CardCapes, GraficoCard, NavBar } from "../components";
 
 const data = {
-  labels: ["2023", "2022", "2021", "2020", "2019"],
+  labels: [2023, 2022, 2021, 2020, 2019],
   datasets: [
     {
       label: "A1",
@@ -27,22 +27,6 @@ const data = {
   ],
 };
 
-const config = {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    xAxes: [
-      {
-        stacked: true,
-      },
-    ],
-    yAxes: [
-      {
-        stacked: true,
-      },
-    ],
-  },
-};
 
 export const Programa = () => {
   useEffect(() => {
@@ -52,6 +36,7 @@ export const Programa = () => {
   return (
     <div className="wrapper">
       <NavBar />
+      
       <div className="content-wrapper">
         <div className="content-header">
           <div className="container">
@@ -68,7 +53,7 @@ export const Programa = () => {
             <div className="container-fluid">
               <h5 className="mb-2">Filtros</h5>
 
-              <form action="#">
+              <form action="#" >
                 <div className="row">
                   <div className="col-md-10">
                     <div className="row">
@@ -78,22 +63,24 @@ export const Programa = () => {
                           <select
                             className="form-control"
                             style={{ width: "100%" }}
+                            defaultValue="PPGCC"
+                            onChange={()=>console.log("Mudando valor form")}
                           >
-                            <option selected>PPGCC</option>
-                            <option>DCCMAPI</option>
+                            <option value="PPGCC" >PPGCC</option>
+                            <option value="DCCMAPI">DCCMAPI</option>
                           </select>
                         </div>
                       </div>
                       <div className="col-3">
                         <div className="form-group">
                           <label>Ano inicial:</label>
-                          <input className="form-control" value="2019" />
+                          <input className="form-control" type="number" defaultValue="2019" />
                         </div>
                       </div>
                       <div className="col-3">
                         <div className="form-group">
                           <label>Ano Final:</label>
-                          <input className="form-control" value="2023" />
+                          <input className="form-control" type="number" defaultValue="2023" />
                         </div>
                       </div>
                     </div>
@@ -130,16 +117,16 @@ export const Programa = () => {
                 />
               </div>
 
-              <GraficoCard config={config} data={data} />
+              <GraficoCard data={data} />
 
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Docentes</h3>
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">Docentes</h3>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                   <table
                     id="example1"
-                    class="table table-bordered table-striped"
+                    className="table table-bordered table-striped"
                   >
                     <thead>
                       <tr>

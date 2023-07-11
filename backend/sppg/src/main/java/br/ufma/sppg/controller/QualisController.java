@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufma.sppg.dto.Indice;
-import br.ufma.sppg.dto.IndiceQualisDTO;
-import br.ufma.sppg.dto.QualisStatsDTO;
-import br.ufma.sppg.dto.QualisSummaryDTO;
-import br.ufma.sppg.model.Producao;
+import br.ufma.sppg.domain.dto.FilterQualisStatsDTO;
+import br.ufma.sppg.domain.dto.Indice;
+import br.ufma.sppg.domain.dto.IndiceQualisDTO;
+import br.ufma.sppg.domain.dto.QualisStatsDTO;
+import br.ufma.sppg.domain.dto.QualisSummaryDTO;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
 import br.ufma.sppg.service.ProgramaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
@@ -27,6 +28,11 @@ public class QualisController {
 
     @Autowired
     ProgramaService service;
+
+    @GetMapping
+    public List<Programa> todos() {
+        return service.findAll();
+    }
 
     // NÃO PASSA O ANO
     /*
@@ -83,7 +89,7 @@ public class QualisController {
             List<Producao> prodFiltro = new ArrayList<Producao>();
             for (Producao prod : producoes) {
 
-                if (prod.getQualis().equals(tipo)) {
+                if (prod.getQualis() != null && prod.getQualis().equals(tipo)) {
                     summary.setQtd(summary.getQtd() + 1);
                     prodFiltro.add(prod);
                 }
@@ -109,7 +115,7 @@ public class QualisController {
             List<Producao> prodFiltro = new ArrayList<Producao>();
             for (Producao prod : producoes) {
 
-                if (prod.getQualis().equals(tipo)) {
+                if (prod.getQualis() != null && prod.getQualis().equals(tipo)) {
                     summary.setQtd(summary.getQtd() + 1);
                     prodFiltro.add(prod);
                 }
@@ -128,39 +134,39 @@ public class QualisController {
     public ResponseEntity obterEstatisticas(@PathVariable Integer idProg, @RequestParam Integer anoIni,
             @RequestParam Integer anoFim) {
 
-        QualisStatsDTO stats;
+        List<QualisStatsDTO> stats = new ArrayList<QualisStatsDTO>();
+        List<FilterQualisStatsDTO> response = new ArrayList<FilterQualisStatsDTO>();
+        ;
 
         try {
-            Integer producoes = service.obterProducoes(idProg, anoIni, anoFim).size();
-            Integer ori = service.obterOrientacoes(idProg, anoIni, anoFim).size();
-            Integer tec = service.obterTecnicas(idProg, anoIni, anoFim).size();
+            Integer dif = anoFim - anoIni;
+            for (int i = 0; i <= dif; i++) {
+                Integer ano = anoIni + i;
+                stats = service.getQualisStats(idProg, ano, ano);
 
-            stats = QualisStatsDTO.builder().orientacoes(ori).producoes(producoes).tecnicas(tec).build();
+                response.add(new FilterQualisStatsDTO(ano, stats));
+            }
 
         } catch (ServicoRuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<QualisStatsDTO>(stats, HttpStatus.OK);
+        return new ResponseEntity<List<FilterQualisStatsDTO>>(response, HttpStatus.OK);
     }
 
     // NÃO PASSA O ANO
     @GetMapping(value = "/stats/{idProg}")
     public ResponseEntity obterEstatisticas(@PathVariable Integer idProg) {
 
-        QualisStatsDTO stats;
+        List<QualisStatsDTO> stats;
 
         try {
-            Integer producoes = service.obterProducoes(idProg, 1950, 2502).size();
-            Integer ori = service.obterOrientacoes(idProg, 1950, 2502).size();
-            Integer tec = service.obterTecnicas(idProg, 1950, 2502).size();
-
-            stats = QualisStatsDTO.builder().orientacoes(ori).producoes(producoes).tecnicas(tec).build();
+            stats = service.getQualisStats(idProg, 1950, 2050);
 
         } catch (ServicoRuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<QualisStatsDTO>(stats, HttpStatus.OK);
+        return new ResponseEntity<List<QualisStatsDTO>>(stats, HttpStatus.OK);
     }
 }

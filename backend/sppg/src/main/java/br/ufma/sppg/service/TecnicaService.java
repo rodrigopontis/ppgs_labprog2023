@@ -9,10 +9,10 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Programa;
-import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Programa;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.OrientacaoRepository;
 import br.ufma.sppg.repo.ProgramaRepository;
@@ -187,7 +187,7 @@ public class TecnicaService {
     // Retorna todas as técnicas de um docente em um período
     public Optional<List<Tecnica>> obterTecnicasDocentePorPeriodo(Integer idDocente, Integer anoInicio,
             Integer anoFim) {
-        
+
         Optional<Docente> docente = docenteRepo.findById(idDocente);
 
         // verificando se o docente existe

@@ -7,11 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufma.sppg.model.Docente;
-import br.ufma.sppg.model.Orientacao;
-import br.ufma.sppg.model.Producao;
-import br.ufma.sppg.model.Programa;
-import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.OrientacaoRepository;
 import br.ufma.sppg.repo.ProducaoRepository;
@@ -81,11 +81,11 @@ public class OrientacaoService {
         }
 
         if (!orientacao.getProducoes().contains(prod)) {
-            orientacao.getProducoes().add(prod); 
+            orientacao.getProducoes().add(prod);
         } else {
             throw new ServicoRuntimeException("Produção já associada.");
         }
-        
+
         return orientacaoRepository.save(orientacao);
     }
 
@@ -100,7 +100,7 @@ public class OrientacaoService {
             List<Tecnica> tecnicas = new ArrayList<>();
             orientacao.setTecnicas(tecnicas);
         }
-            
+
         if (!orientacao.getTecnicas().contains(tec)) {
             orientacao.getTecnicas().add(tec);
         } else {

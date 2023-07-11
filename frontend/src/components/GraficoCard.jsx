@@ -18,27 +18,44 @@ ChartJS.register(
   Legend
 );
 
-export const GraficoCard = ({ config, data }) => {
-  return (
-    <div class="card card-gray">
-      <div class="card-header">
-        <h3 class="card-title">Produção vs Qualis</h3>
+const config = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: 
+      {
+        stacked: true,
+      },
+    
+    y: 
+      {
+        stacked: true,
+      },
+    
+  },
+};
 
-        <div class="card-tools">
+export const GraficoCard = ({ data }) => {
+  return (
+    <div className="card card-gray">
+      <div className="card-header">
+        <h3 className="card-title">Produção vs Qualis</h3>
+
+        <div className="card-tools">
           <button
             type="button"
-            class="btn btn-tool"
+            className="btn btn-tool"
             data-card-widget="collapse"
           >
-            <i class="fas fa-minus"></i>
+            <i className="fas fa-minus"></i>
           </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
-            <i class="fas fa-times"></i>
+          <button type="button" className="btn btn-tool" data-card-widget="remove">
+            <i className="fas fa-times"></i>
           </button>
         </div>
       </div>
-      <div class="card-body">
-        <div class="chart">
+      <div className="card-body">
+        <div className="chart">
           <Bar options={config} data={data} />
         </div>
       </div>

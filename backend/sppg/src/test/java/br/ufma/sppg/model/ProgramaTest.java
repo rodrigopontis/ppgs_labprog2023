@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Programa;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.ProgramaRepository;
 
@@ -38,7 +40,7 @@ public class ProgramaTest {
     Assertions.assertNotNull(programaSalvo);
 
   }
-  
+
   @Test
   public void shouldSaveProgramaWithDocente() throws ParseException {
     Programa novoPrograma = Programa.builder()
@@ -60,7 +62,7 @@ public class ProgramaTest {
     Assertions.assertEquals(programaSalvoV2.getDocentes().size(), 1);
 
   }
-  
+
   @Test
   public void shouldAvoidDeleteProgramaWithDocente() throws ParseException {
     Programa novoPrograma = Programa.builder()
@@ -86,15 +88,11 @@ public class ProgramaTest {
       // TODO: handle exception
     }
 
-    
     Optional<Programa> optionalPrograma = programaRepository.findById(programaSalvoV2.getId());
     Assertions.assertNotNull(optionalPrograma.isPresent());
     List<Docente> foundDocentes = docenteRepository.findAllById(Collections.singleton(docenteSalvo.getId()));
     Assertions.assertFalse(foundDocentes.isEmpty());
-    
-
 
   }
 
-  
 }

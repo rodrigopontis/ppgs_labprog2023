@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.ufma.sppg.domain.model.Docente;
+import br.ufma.sppg.domain.model.Orientacao;
+import br.ufma.sppg.domain.model.Producao;
+import br.ufma.sppg.domain.model.Programa;
+import br.ufma.sppg.domain.model.Tecnica;
 import br.ufma.sppg.repo.DocenteRepository;
 import br.ufma.sppg.repo.ProgramaRepository;
 import br.ufma.sppg.repo.TecnicaRepository;
@@ -14,9 +19,7 @@ import br.ufma.sppg.repo.ProducaoRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Optional;
 
 @SpringBootTest
@@ -207,19 +210,19 @@ public class DocenteTest {
         // Verifica-se a integridade dos docentes salvos
 
         // Programa
-        Optional<Docente> docenteComPrograma = repo.findById(docenteSalvoComPrograma.id);
+        Optional<Docente> docenteComPrograma = repo.findById(docenteSalvoComPrograma.getId());
         Assertions.assertNotNull(docenteComPrograma);
 
         // Orientacao
-        Optional<Docente> docenteComOrientacao = repo.findById(docenteSalvoComOrientacao.id);
+        Optional<Docente> docenteComOrientacao = repo.findById(docenteSalvoComOrientacao.getId());
         Assertions.assertNotNull(docenteComOrientacao);
 
         // Tecnica
-        Optional<Docente> docenteComTecnica = repo.findById(docenteSalvoComTecnica.id);
+        Optional<Docente> docenteComTecnica = repo.findById(docenteSalvoComTecnica.getId());
         Assertions.assertNotNull(docenteComTecnica);
 
         // Producao
-        Optional<Docente> docenteComProducao = repo.findById(docenteSalvoComProd.id);
+        Optional<Docente> docenteComProducao = repo.findById(docenteSalvoComProd.getId());
         Assertions.assertNotNull(docenteComProducao);
 
     }
