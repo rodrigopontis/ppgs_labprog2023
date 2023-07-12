@@ -1,9 +1,9 @@
-import { axios } from "axios";
+import axios from "axios";
 
 export default class HttpService {
   constructor() {
     this.axios = axios.create({
-      baseURL: "http://localhost:8080/",
+      baseURL: "http://localhost:8080/api/v1",
     });
   }
 

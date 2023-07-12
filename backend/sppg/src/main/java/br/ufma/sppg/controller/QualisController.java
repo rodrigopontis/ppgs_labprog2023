@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
 @RestController
 @RequestMapping(value = "/api/v1/qualis")
+@CrossOrigin(origins = "*")
 public class QualisController {
 
     @Autowired
@@ -136,15 +138,15 @@ public class QualisController {
 
         List<QualisStatsDTO> stats = new ArrayList<QualisStatsDTO>();
         List<FilterQualisStatsDTO> response = new ArrayList<FilterQualisStatsDTO>();
-        ;
 
         try {
             Integer dif = anoFim - anoIni;
             for (int i = 0; i <= dif; i++) {
                 Integer ano = anoIni + i;
                 stats = service.getQualisStats(idProg, ano, ano);
+                Integer qtd = service.obterProducoes(idProg, ano, ano).size();
 
-                response.add(new FilterQualisStatsDTO(ano, stats));
+                response.add(new FilterQualisStatsDTO(ano, stats, qtd));
             }
 
         } catch (ServicoRuntimeException e) {

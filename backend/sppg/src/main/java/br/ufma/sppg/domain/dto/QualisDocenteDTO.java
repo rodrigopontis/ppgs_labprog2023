@@ -9,8 +9,8 @@ import lombok.Data;
 @Builder
 @Data
 @AllArgsConstructor
-public class FilterQualisStatsDTO {
-    private Integer ano;
+public class QualisDocenteDTO {
+    private String docente;
+    private Integer docenteId;
     private List<QualisStatsDTO> stats;
-    private Integer total;
 }

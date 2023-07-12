@@ -5,12 +5,22 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const tryLogin = () => {
-    navigate("/programa");
+    const userToken = localStorage.getItem("token");
+
+    if (!userToken) {
+      localStorage.setItem("token", "logado");
+
+      navigate("/programa");
+    }
   };
 
   useEffect(() => {
     document.body.classNameList = "";
-  });
+
+    const userToken = localStorage.getItem("token");
+
+    if (userToken) navigate("/programa");
+  }, [navigate]);
 
   return (
     <section className="vh-100">
@@ -24,7 +34,9 @@ export const Login = () => {
 
             <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
               <form>
-                <h3 className="fw-normal mb-3 pb-3">Tela de login</h3>
+                <h3 className="fw-normal mb-3 pb-3">
+                  Bem vindo ao Programa de PPG
+                </h3>
 
                 <div className="form-outline mb-4">
                   <input

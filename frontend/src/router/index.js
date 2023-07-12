@@ -1,7 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Programa, Login, Docente } from "../pages";
+import { Navigation } from "./Navigation";
 
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigation />,
+  },
   {
     path: "/programa",
     element: <Programa />,
@@ -11,7 +16,7 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/docente",
+    path: "/docente/:idDocente",
     element: <Docente />,
   },
 ]);

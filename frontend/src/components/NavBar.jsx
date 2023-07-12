@@ -2,16 +2,28 @@ import { Link, useNavigate } from "react-router-dom";
 export const NavBar = () => {
   const navigate = useNavigate();
 
+  const handleSelectLink = (loc) => {
+    if (window.location.pathname === loc) return "nav-item active";
+
+    return "nav-item";
+  };
+
   const tryLogout = () => {
-    navigate("/login");
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
     <nav className="main-header navbar navbar-expand-md navbar-light navbar-white">
       <div className="container">
-        <Link to="/programa" className="navbar-brand">
+        <a
+          href="https://github.com/gebraz/ppgs_labprog2023"
+          className="navbar-brand"
+          target="_blank"
+          rel="noreferrer"
+        >
           <span className="brand-text font-weight-light">SPPG</span>
-        </Link>
+        </a>
 
         <button
           className="navbar-toggler order-1"
@@ -27,14 +39,9 @@ export const NavBar = () => {
 
         <div className="collapse navbar-collapse order-3" id="navbarCollapse">
           <ul className="navbar-nav">
-            <li className="nav-item">
+            <li className={handleSelectLink("/programa")}>
               <Link to="/programa" className="nav-link">
                 Programas
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/docente" className="nav-link">
-                Docentes
               </Link>
             </li>
           </ul>

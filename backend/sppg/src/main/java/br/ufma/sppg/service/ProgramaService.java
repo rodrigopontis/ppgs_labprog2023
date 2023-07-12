@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufma.sppg.domain.dto.FilterDocenteQualisStatsDTO;
 import br.ufma.sppg.domain.dto.Indice;
+import br.ufma.sppg.domain.dto.QualisDocenteDTO;
 import br.ufma.sppg.domain.dto.QualisStatsDTO;
 import br.ufma.sppg.domain.enums.QualisEnum;
 import br.ufma.sppg.domain.model.Docente;
@@ -22,6 +24,9 @@ public class ProgramaService {
 
     @Autowired
     ProgramaRepository repository;
+
+    @Autowired
+    DocenteService docService;
 
     public List<Programa> findAll() {
         return repository.findAll();
@@ -54,6 +59,81 @@ public class ProgramaService {
         }
 
         return stats;
+    }
+
+    public List<QualisDocenteDTO> obterStatsPorDocente(Integer idPrograma, Integer anoIni, Integer anoFim) {
+        verificarId(idPrograma);
+        verificarData(anoIni, anoFim);
+
+        List<Docente> docentes = repository.obterDocentes(idPrograma);
+        List<QualisStatsDTO> stats = new ArrayList<QualisStatsDTO>();
+        List<QualisDocenteDTO> res = new ArrayList<QualisDocenteDTO>();
+
+        for (Docente docente : docentes) {
+            // para cada Docente inicia-se um objeto
+            // com os valores dos qualis
+            for (QualisEnum value : QualisEnum.values()) {
+                stats.add(new QualisStatsDTO(value, 0));
+            }
+
+            // System.out.println("foram inicializados: " + stats.size());
+
+            for (Producao prod : docente.getProducoes()) {
+                if (prod.getAno() >= anoIni && prod.getAno() <= anoFim) {
+                    if (prod.getQualis() != null) {
+                        for (QualisStatsDTO stat : stats) {
+                            if (stat.getType().toString().equals(prod.getQualis())) {
+                                stat.setQtd(stat.getQtd() + 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // após o preenchimento dos dados é adicionada uma resposta
+            res.add(new QualisDocenteDTO(docente.getNome(), docente.getId(), stats));
+            stats = new ArrayList<QualisStatsDTO>();
+        }
+
+        return res;
+    }
+
+    public List<FilterDocenteQualisStatsDTO> obterDocenteQualisStats(Integer idPrograma, Integer idDocente,
+            Integer anoIni,
+            Integer anoFim) {
+
+        List<Producao> producoes = docService.obterProducoes(idPrograma, anoIni, anoFim);
+        List<FilterDocenteQualisStatsDTO> res = new ArrayList<FilterDocenteQualisStatsDTO>();
+        List<QualisStatsDTO> stats = new ArrayList<QualisStatsDTO>();
+
+        Integer dif = anoFim - anoIni;
+        for (int i = 0; i <= dif; i++) {
+
+            Integer ano = anoIni + i;
+
+            for (QualisEnum value : QualisEnum.values()) {
+                stats.add(new QualisStatsDTO(value, 0));
+            }
+
+            for (Producao prod : producoes) {
+                if (prod.getAno().equals(ano)) {
+                    if (prod.getQualis() != null) {
+
+                        for (QualisStatsDTO stat : stats) {
+                            if (stat.getType().toString().equals(prod.getQualis())) {
+                                stat.setQtd(stat.getQtd() + 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            res.add(new FilterDocenteQualisStatsDTO(ano, stats, idDocente));
+            stats = new ArrayList<QualisStatsDTO>();
+        }
+
+        return res;
+
     }
 
     public List<Programa> obterPrograma(String nome) {
