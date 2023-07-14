@@ -38,6 +38,13 @@ public class OrientacaoService {
     @Autowired
     private TecnicaRepository tecnicaRepository;
 
+    public Orientacao findById(Integer id) {
+
+        validarIdOri(id);
+
+        return orientacaoRepository.findById(id).get();
+    }
+
     // TODO: Validar entrada de dados
     public Optional<List<Orientacao>> obterOrientacoesComTecnicaPorPeriodo(Integer idDocente, Integer anoInicio,
             Integer anoFim) {
@@ -108,6 +115,36 @@ public class OrientacaoService {
         }
 
         return orientacaoRepository.save(orientacao);
+    }
+
+    @Transactional
+    public Orientacao trocarDiscente(Integer idOri, String discente) {
+        validarDiscente(idOri, discente);
+
+        Orientacao ori = orientacaoRepository.findById(idOri).get();
+
+        ori.setDiscente(discente);
+
+        return orientacaoRepository.save(ori);
+    }
+
+    private void validarIdOri(Integer idOri) {
+
+        Optional<Orientacao> ori = orientacaoRepository.findById(idOri);
+
+        if (ori.isEmpty())
+            throw new ServicoRuntimeException("Não existem orientações com este Id");
+    }
+
+    private void validarDiscente(Integer idOri, String discente) {
+
+        validarIdOri(idOri);
+
+        Orientacao ori = orientacaoRepository.findById(idOri).get();
+
+        if (ori.getDiscente().equals(discente))
+            throw new ServicoRuntimeException("O discente informado já está registrado na orientação.");
+
     }
 
     // TODO: Validar o período informado

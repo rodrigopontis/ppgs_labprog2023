@@ -47,7 +47,7 @@ export const Docente = () => {
   const filtrarPpg = (e) => {
     e.preventDefault();
 
-    getDataFromApi(idDocente, formData.anoIni, formData.anoFim);
+    getDataFromApi(formData.anoIni, formData.anoFim);
   };
 
   const getDataFromApi = useCallback(
@@ -67,7 +67,6 @@ export const Docente = () => {
         .getAllDocenteStats(idDocente, anoIni, anoFim)
         .then(({ data }) => {
           setDocStatsData(data);
-
           setIsLoadingStats(false);
         })
         .catch((err) => {
@@ -109,6 +108,8 @@ export const Docente = () => {
           alert("Erro na req");
           setIsLoadingOri(false);
         });
+
+      setTotal(0);
     },
     [idDocente]
   );
@@ -122,6 +123,12 @@ export const Docente = () => {
   }, [navigate]);
 
   useEffect(getDataFromApi, [getDataFromApi]);
+
+  useEffect(() => {
+    const soma = oriData.length + tecData.length + prodData.length;
+
+    setTotal(soma);
+  }, [oriData, tecData, prodData]);
 
   return (
     <PageComponent>
@@ -236,6 +243,7 @@ export const Docente = () => {
                     >
                       <i className="fas fa-times"></i>
                     </button>
+                    Produção em Congressos vs Qualis
                   </div>
                 </div>
                 <div className="card-body">

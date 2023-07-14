@@ -1,8 +1,6 @@
 package br.ufma.sppg.service.loader;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -524,7 +522,7 @@ public class Parsing extends DefaultHandler {
     public void characters(char[] ch, int start, int length)
             throws SAXException {
 
-        String texto = new String(ch, start, length);
+        // String texto = new String(ch, start, length);
 
         // ------------------------------------------------------------
         // --- TRATAMENTO DAS INFORMAÇÕES DE ACORDO COM A TAG ATUAL ---

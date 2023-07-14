@@ -28,55 +28,55 @@ public class ProgramaController {
     ProgramaService programa;
 
     @GetMapping("/obterPrograma")
-    public ResponseEntity obterPrograma(
+    public ResponseEntity<?> obterPrograma(
             @RequestParam("programa") String nome) {
         try {
             List<Programa> programas = programa.obterPrograma(nome);
-            return new ResponseEntity(programas, HttpStatus.OK);
+            return new ResponseEntity<List<Programa>>(programas, HttpStatus.OK);
         } catch (ServicoRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/obterDocentesPrograma")
-    public ResponseEntity obterDocentesPrograma(
+    public ResponseEntity<?> obterDocentesPrograma(
             @RequestParam("docente") Integer idPrograma) {
         try {
             List<Docente> docentes = programa.obterDocentesPrograma(idPrograma);
-            return new ResponseEntity(docentes, HttpStatus.OK);
+            return new ResponseEntity<List<Docente>>(docentes, HttpStatus.OK);
         } catch (ServicoRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/obterProducoesPrograma")
-    public ResponseEntity obterProducoesPrograma(
+    public ResponseEntity<?> obterProducoesPrograma(
             @RequestParam("programa") Integer idPrograma, Integer anoIni, Integer anoFin) {
         try {
             List<Producao> producoes = programa.obterProducoes(idPrograma, anoIni, anoFin);
-            return new ResponseEntity(producoes, HttpStatus.OK);
+            return new ResponseEntity<List<Producao>>(producoes, HttpStatus.OK);
         } catch (ServicoRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/obterOrientacoesPrograma")
-    public ResponseEntity obterOrientacoesPorgrama(
+    public ResponseEntity<?> obterOrientacoesPorgrama(
             @RequestParam("programa") Integer idPrograma, Integer anoIni, Integer anoFin) {
         try {
             List<Orientacao> orientacoes = programa.obterOrientacoes(idPrograma, anoIni, anoFin);
-            return new ResponseEntity(orientacoes, HttpStatus.OK);
+            return new ResponseEntity<List<Orientacao>>(orientacoes, HttpStatus.OK);
         } catch (ServicoRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/obterTecnicasPrograma")
-    public ResponseEntity obterTecnicasPrograma(
+    public ResponseEntity<?> obterTecnicasPrograma(
             @RequestParam("programa") Integer idPrograma, Integer anoIni, Integer anoFin) {
         try {
             List<Tecnica> tecnicas = programa.obterTecnicas(idPrograma, anoIni, anoFin);
-            return new ResponseEntity(tecnicas, HttpStatus.OK);
+            return new ResponseEntity<List<Tecnica>>(tecnicas, HttpStatus.OK);
         } catch (ServicoRuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
