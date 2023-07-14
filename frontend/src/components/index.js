@@ -5,6 +5,7 @@ import { DocenteTable } from "./DocenteTable";
 import { PageComponent } from "./PageComponent";
 import { DocentePageTable } from "./DocentePageTable";
 import { DocenteChart } from "./DocenteChart";
+import { OrientacaoModal } from "./OrientacaoModal";
 
 export {
   NavBar,
@@ -14,4 +15,5 @@ export {
   PageComponent,
   DocentePageTable,
   DocenteChart,
+  OrientacaoModal,
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const formartData = (data) => {
   if (!data) return;
 
-  console.log(data);
+  // console.log(data);
 
   // estou codando as 12:19 e com fome
   // perdão pela falta de criatividade

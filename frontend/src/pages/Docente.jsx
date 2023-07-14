@@ -71,6 +71,7 @@ export const Docente = () => {
         })
         .catch((err) => {
           console.error(err);
+          setIsLoadingStats(false);
         });
 
       service
@@ -82,7 +83,7 @@ export const Docente = () => {
         .catch((er) => {
           console.log(er);
           alert("Erro na req");
-          setIsLoadingOri(false);
+          setIsLoadingProd(false);
         });
 
       service
@@ -106,7 +107,7 @@ export const Docente = () => {
         .catch((er) => {
           console.log(er);
           alert("Erro na req");
-          setIsLoadingOri(false);
+          setIsLoadingTec(false);
         });
 
       setTotal(0);
@@ -125,6 +126,8 @@ export const Docente = () => {
   useEffect(getDataFromApi, [getDataFromApi]);
 
   useEffect(() => {
+    if (!oriData || !tecData || !prodData) return;
+
     const soma = oriData.length + tecData.length + prodData.length;
 
     setTotal(soma);
@@ -243,7 +246,6 @@ export const Docente = () => {
                     >
                       <i className="fas fa-times"></i>
                     </button>
-                    Produção em Congressos vs Qualis
                   </div>
                 </div>
                 <div className="card-body">
@@ -280,6 +282,7 @@ export const Docente = () => {
                     </button>
                   </div>
                 </div>
+
                 <div className="card-body">
                   <div className="chart">
                     <DocenteChart
@@ -291,65 +294,26 @@ export const Docente = () => {
                 </div>
               </div>
 
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Orientações</h3>
-                </div>
+              <DocentePageTable
+                title="Orientações"
+                tipo="ori"
+                data={oriData}
+                isLoading={isLoadingOri}
+              />
 
-                {!isLoadingOri && (
-                  <div className="card-body">
-                    <DocentePageTable tipo="ori" data={oriData} />
-                  </div>
-                )}
+              <DocentePageTable
+                title="Artigos"
+                tipo="prod"
+                data={prodData}
+                isLoading={isLoadingProd}
+              />
 
-                {isLoadingOri && (
-                  <div className="d-flex p-5 justify-content-center">
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Artigos</h3>
-                </div>
-
-                {!isLoadingProd && (
-                  <div className="card-body">
-                    <DocentePageTable tipo="prod" data={prodData} />
-                  </div>
-                )}
-
-                {isLoadingProd && (
-                  <div className="d-flex p-5 justify-content-center">
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Técnicas</h3>
-                </div>
-
-                {!isLoadingTec && (
-                  <div className="card-body">
-                    <DocentePageTable tipo="tec" data={tecData} />
-                  </div>
-                )}
-
-                {isLoadingTec && (
-                  <div className="d-flex p-5 justify-content-center">
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <DocentePageTable
+                title="Técnicas"
+                tipo="tec"
+                data={tecData}
+                isLoading={isLoadingTec}
+              />
             </div>
           </div>
         </div>
