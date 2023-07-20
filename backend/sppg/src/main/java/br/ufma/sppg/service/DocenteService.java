@@ -19,6 +19,10 @@ public class DocenteService {
     @Autowired
     DocenteRepository repository;
 
+    public List<Docente> getALl() {
+        return repository.findAll();
+    }
+
     public Indice obterIndice(Integer idDocente, Integer anoIni, Integer anoFin) {
         verificarId(idDocente);
         verificarData(anoIni, anoFin);

@@ -5,14 +5,17 @@ import {
   DocentePageTable,
   DocenteChart,
 } from "../components";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import DocenteService from "../service/DocenteService";
+import { useAuth } from "../auth/AuthProvider";
 
 const service = new DocenteService();
 
 export const Docente = () => {
   const navigate = useNavigate();
   const { idDocente } = useParams();
+
+  const { token } = useAuth();
 
   const [oriData, setOriData] = useState(null);
   const [prodData, setProdData] = useState(null);
@@ -52,6 +55,8 @@ export const Docente = () => {
 
   const getDataFromApi = useCallback(
     (anoIni = 2019, anoFim = 2023) => {
+      if (!token) return;
+
       setIsLoadingProd(true);
       setIsLoadingTec(true);
       setIsLoadingOri(true);
@@ -112,15 +117,11 @@ export const Docente = () => {
 
       setTotal(0);
     },
-    [idDocente]
+    [idDocente, token]
   );
 
   useEffect(() => {
     document.body.classList = "hold-transition layout-top-nav";
-
-    const userToken = localStorage.getItem("token");
-
-    if (!userToken) navigate("/login");
   }, [navigate]);
 
   useEffect(getDataFromApi, [getDataFromApi]);
@@ -132,6 +133,8 @@ export const Docente = () => {
 
     setTotal(soma);
   }, [oriData, tecData, prodData]);
+
+  if (!token) return <Navigate to="/login" />;
 
   return (
     <PageComponent>

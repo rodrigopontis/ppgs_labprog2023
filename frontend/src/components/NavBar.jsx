@@ -1,6 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
+
 export const NavBar = () => {
   const navigate = useNavigate();
+
+  const { onLogout } = useAuth();
 
   const handleSelectLink = (loc) => {
     if (window.location.pathname === loc) return "nav-item active";
@@ -9,7 +13,7 @@ export const NavBar = () => {
   };
 
   const tryLogout = () => {
-    localStorage.clear();
+    onLogout();
     navigate("/");
   };
 

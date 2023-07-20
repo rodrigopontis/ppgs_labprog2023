@@ -5,17 +5,23 @@ import {
   GraficoCard,
   PageComponent,
 } from "../components";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import ProgramaService from "../service/ProgramaService";
+import { Cookies } from "react-cookie";
+import { useAuth } from "../auth/AuthProvider";
 
 const ppgValues = [
   { name: "PPGCC", code: 15 },
   { name: "DCCMAPI", code: 0 },
 ];
 
-const service = new ProgramaService();
+const cookie = new Cookies();
+
+const service = new ProgramaService(cookie.get("token"));
 
 export const Programa = () => {
+  const { token } = useAuth();
+
   const [formData, setFormData] = useState({
     ppg: ppgValues[0].name,
     anoIni: 2019,
@@ -26,8 +32,6 @@ export const Programa = () => {
   const [isLoadingProg, setIsLoadingProg] = useState(true);
   const [isLoadingDoc, setIsLoadingDoc] = useState(true);
   const [totalProd, setTotalProd] = useState(null);
-
-  const navigate = useNavigate();
 
   const filterHandler = (e) => {
     const { name, value } = e.target;
@@ -65,8 +69,7 @@ export const Programa = () => {
         })
         .catch((er) => {
           console.error(er);
-          if ([400])
-            alert("Não foi possível atualizar valores. Verifique o filtro.");
+
           setIsLoadingProg(false);
         });
     },
@@ -85,7 +88,6 @@ export const Programa = () => {
         })
         .catch((er) => {
           console.error(er);
-          alert("Não foi possível atualizar valores. Verifique o filtro.");
           setIsLoadingDoc(false);
         });
     },
@@ -94,23 +96,24 @@ export const Programa = () => {
 
   useEffect(() => {
     document.body.classList = "hold-transition layout-top-nav";
-
-    const userToken = localStorage.getItem("token");
-
-    if (!userToken) navigate("/login");
-  }, [navigate]);
+  }, []);
 
   // REQUISIÇÕES
 
   const getDataFromApi = useCallback(
     (idProg = 15, anoIni = 2019, anoFim = 2023) => {
+      console.log(token);
+      if (!token) return;
+
       getStatsFromApi(idProg, anoIni, anoFim);
       getDocenteStatsFromApi(idProg, anoIni, anoFim);
     },
-    [getStatsFromApi, getDocenteStatsFromApi]
+    [getStatsFromApi, token, getDocenteStatsFromApi]
   );
 
   useEffect(getDataFromApi, [getDataFromApi]);
+
+  if (!token) return <Navigate to="/login" />;
 
   return (
     <PageComponent>

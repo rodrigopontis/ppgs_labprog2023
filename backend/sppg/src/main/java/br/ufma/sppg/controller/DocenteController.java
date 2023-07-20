@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufma.sppg.domain.dto.FilterDocenteQualisStatsDTO;
 import br.ufma.sppg.domain.dto.QualisDocenteDTO;
+import br.ufma.sppg.domain.model.Docente;
 // import br.ufma.sppg.domain.model.Docente;
 import br.ufma.sppg.domain.model.Orientacao;
 import br.ufma.sppg.domain.model.Producao;
@@ -54,6 +55,11 @@ public class DocenteController {
     // System.out.println("Todos os docentes");
     // return repo.findAll();
     // }
+
+    @GetMapping
+    public List<Docente> getALl() {
+        return service.getALl();
+    }
 
     @GetMapping("/nome/{id}")
     public ResponseEntity<?> getNomeById(@PathVariable(value = "id", required = true) Integer idDocente) {

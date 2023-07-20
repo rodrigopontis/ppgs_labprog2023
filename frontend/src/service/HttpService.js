@@ -1,9 +1,14 @@
 import axios from "axios";
 
 export default class HttpService {
-  constructor() {
+  token;
+
+  constructor(token) {
     this.axios = axios.create({
       baseURL: "http://localhost:8080/api/v1",
+      headers: {
+        Cookies: `teles=${token}`,
+      },
     });
   }
 

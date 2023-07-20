@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -66,6 +67,9 @@ public class Docente {
     @JsonIgnore
     @OneToMany(mappedBy = "orientador")
     List<Orientacao> orientacoes;
+
+    @OneToOne(mappedBy = "docente")
+    private User user;
 
     @PreUpdate
     protected void onUpdate() {

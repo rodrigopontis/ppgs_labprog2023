@@ -1,26 +1,25 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
 
 export const Login = () => {
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
-  const tryLogin = () => {
-    const userToken = localStorage.getItem("token");
+  const { token, onLogin } = useAuth();
 
-    if (!userToken) {
-      localStorage.setItem("token", "logado");
-
-      navigate("/programa");
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    document.body.classNameList = "";
+  const tryLogin = () => {
+    onLogin(formData);
+  };
 
-    const userToken = localStorage.getItem("token");
-
-    if (userToken) navigate("/programa");
-  }, [navigate]);
+  if (token) return <Navigate to="/programa" />;
 
   return (
     <section className="vh-100">
@@ -41,18 +40,20 @@ export const Login = () => {
                 <div className="form-outline mb-4">
                   <input
                     type="email"
-                    id="form2Example18"
                     className="form-control form-control-lg"
+                    name="username"
                     placeholder="Email"
+                    onChange={handleInputChange}
                   />
                 </div>
 
                 <div className="form-outline mb-4">
                   <input
                     type="password"
-                    id="form2Example28"
+                    name="password"
                     className="form-control form-control-lg"
                     placeholder="Senha"
+                    onChange={handleInputChange}
                   />
                 </div>
 
